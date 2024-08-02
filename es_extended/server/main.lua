@@ -280,7 +280,7 @@ function loadESXPlayer(identifier, playerId, isNew)
     userData.maxWeight = xPlayer.getMaxWeight()
     xPlayer.triggerEvent("esx:playerLoaded", userData, isNew, userData.skin)
 
-    if not Config.OxInventory and not Config.QSInventory then
+    if not Config.OxInventory then
         xPlayer.triggerEvent("esx:createMissingPickups", Core.Pickups)
     else
         exports.ox_inventory:setPlayerInventory(xPlayer, userData.inventory)
