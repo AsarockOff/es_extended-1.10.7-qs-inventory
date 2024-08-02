@@ -27,6 +27,11 @@ exports("getSharedObject", function()
     return ESX
 end)
 
+if GetResourceState('qs-inventory') ~= 'missing' then
+    Config.QSInventory = true
+    Config.PlayerFunctionOverride = 'QSInventory'
+end
+
 if Config.OxInventory then
     Config.PlayerFunctionOverride = "OxInventory"
     SetConvarReplicated("inventory:framework", "esx")
@@ -45,6 +50,9 @@ end
 
 MySQL.ready(function()
     Core.DatabaseConnected = true
+    if Config.QSInventory then
+        ESX.Items = exports['qs-inventory']:GetItemList()
+    end
     if not Config.OxInventory then
         local items = MySQL.query.await("SELECT * FROM items")
         for _, v in ipairs(items) do

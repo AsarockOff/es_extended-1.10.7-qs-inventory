@@ -181,7 +181,7 @@ function loadESXPlayer(identifier, playerId, isNew)
     }
 
     -- Inventory
-    if not Config.OxInventory then
+    if not Config.OxInventory and not Config.QSInventory then
         local inventory = (result.inventory and result.inventory ~= "") and json.decode(result.inventory) or {}
 
         for name, item in pairs(ESX.Items) do
@@ -218,7 +218,7 @@ function loadESXPlayer(identifier, playerId, isNew)
     end
 
     -- Loadout
-    if not Config.OxInventory then
+    if not Config.OxInventory and not Config.QSInventory then
         if result.loadout and result.loadout ~= "" then
             local loadout = json.decode(result.loadout)
 
@@ -280,7 +280,7 @@ function loadESXPlayer(identifier, playerId, isNew)
     userData.maxWeight = xPlayer.getMaxWeight()
     xPlayer.triggerEvent("esx:playerLoaded", userData, isNew, userData.skin)
 
-    if not Config.OxInventory then
+    if not Config.OxInventory and not Config.QSInventory then
         xPlayer.triggerEvent("esx:createMissingPickups", Core.Pickups)
     else
         exports.ox_inventory:setPlayerInventory(xPlayer, userData.inventory)
@@ -362,7 +362,7 @@ AddEventHandler("esx:playerLogout", function(playerId, cb)
     TriggerClientEvent("esx:onPlayerLogout", playerId)
 end)
 
-if not Config.OxInventory then
+if not Config.OxInventory and not Config.QSInventory then
     RegisterNetEvent("esx:updateWeaponAmmo")
     AddEventHandler("esx:updateWeaponAmmo", function(weaponName, ammoCount)
         local xPlayer = ESX.GetPlayerFromId(source)

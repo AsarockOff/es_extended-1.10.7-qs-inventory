@@ -245,7 +245,7 @@ end)
 AddEventHandler("esx:restoreLoadout", function()
     ESX.SetPlayerData("ped", PlayerPedId())
 
-    if not Config.OxInventory then
+    if not Config.OxInventory and not Config.QSInventory then
         local ammoTypes = {}
         RemoveAllPedWeapons(ESX.PlayerData.ped, true)
 
@@ -294,7 +294,7 @@ AddEventHandler("esx:setAccountMoney", function(account)
     ESX.SetPlayerData("accounts", ESX.PlayerData.accounts)
 end)
 
-if not Config.OxInventory then
+if not Config.OxInventory and not Config.QSInventory then
     RegisterNetEvent("esx:addInventoryItem")
     AddEventHandler("esx:addInventoryItem", function(item, count, showNotification)
         for k, v in ipairs(ESX.PlayerData.inventory) do
@@ -367,7 +367,7 @@ AddEventHandler("esx:setGroup", function(group)
     ESX.SetPlayerData("group", group)
 end)
 
-if not Config.OxInventory then
+if not Config.OxInventory and not Config.QSInventory then
     RegisterNetEvent("esx:createPickup")
     AddEventHandler("esx:createPickup", function(pickupId, label, coords, itemType, name, components, tintIndex)
         local function setObjectProperties(object)
@@ -418,7 +418,7 @@ AddEventHandler("esx:registerSuggestions", function(registeredCommands)
     end
 end)
 
-if not Config.OxInventory then
+if not Config.OxInventory and not Config.QSInventory then
     RegisterNetEvent("esx:removePickup")
     AddEventHandler("esx:removePickup", function(pickupId)
         if pickups[pickupId] and pickups[pickupId].obj then
@@ -429,7 +429,7 @@ if not Config.OxInventory then
 end
 
 function StartServerSyncLoops()
-    if not Config.OxInventory then
+    if not Config.OxInventory and not Config.QSInventory then
         -- keep track of ammo
 
         CreateThread(function()
@@ -459,7 +459,7 @@ function StartServerSyncLoops()
     end
 end
 
-if not Config.OxInventory and Config.EnableDefaultInventory then
+if not Config.OxInventory and not Config.QSInventory and Config.EnableDefaultInventory then
     ESX.RegisterInput("showinv", TranslateCap("keymap_showinventory"), "keyboard", "F2", function()
         if not ESX.PlayerData.dead then
             ESX.ShowInventory()
@@ -473,7 +473,7 @@ if not Config.EnableWantedLevel then
     SetMaxWantedLevel(0)
 end
 
-if not Config.OxInventory then
+if not Config.OxInventory and not Config.QSInventory then
     CreateThread(function()
         while true do
             local Sleep = 1500
